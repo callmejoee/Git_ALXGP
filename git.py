@@ -44,3 +44,18 @@ def hash_object(data, obj_type, write=True):
             os.makedirs(os.path.dirname(path), exist_ok=True)
             write_file(path, zlib.compress(full_file_data))
     return sha
+
+# Test the functions
+repo_name = "test_repo"
+init(repo_name)  # Initialize the repository
+
+data = b"Hello, Git!"
+obj_type = "blob"
+sha1_hash = hash_object(data, obj_type, write=True)  # Hash the object and store it
+
+# Check if the object is correctly stored
+object_path = os.path.join(repo_name, '.git', 'objects', sha1_hash[:2], sha1_hash[2:])
+if os.path.exists(object_path):
+    print(f"Object stored successfully at {object_path}.")
+else:
+    print(f"Failed to store object.")
